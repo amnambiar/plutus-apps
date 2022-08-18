@@ -126,7 +126,7 @@ runStandardProperty :: forall m. ContractModel m => CertificationOptions -> Cove
 runStandardProperty opts covIdx = liftIORep $ quickCheckWithCoverageAndResult
                                   (mkQCArgs opts)
                                   (set coverageIndex covIdx defaultCoverageOptions)
-                                $ \ covopts -> propRunActionsWithOptions
+                                $ \ covopts -> withMaxSuccess 10 $ propRunActionsWithOptions
                                                  @m
                                                  defaultCheckOptionsContractModel
                                                  covopts
@@ -136,7 +136,7 @@ checkDS :: forall m. ContractModel m => CertificationOptions -> CoverageIndex ->
 checkDS opts covIdx = liftIORep $ quickCheckWithCoverageAndResult
                                   (mkQCArgs opts)
                                   (set coverageIndex covIdx defaultCoverageOptions)
-                                $ \ covopts -> checkDoubleSatisfactionWithOptions
+                                $ \ covopts -> withMaxSuccess 10 $ checkDoubleSatisfactionWithOptions
                                                  @m
                                                  defaultCheckOptionsContractModel
                                                  covopts
